@@ -205,6 +205,10 @@ class ContestsRepository implements ContestsRepositoryContract
         $defaultColumns = ['id', 'title', 'slug'];
 
         $relations = [
+            'access' => function ($query) {
+                $query->select(['accessable_id', 'accessable_type', 'field', 'access']);
+            },
+
             'meta' => function ($query) {
                 $query->select(['metable_id', 'metable_type', 'key', 'value']);
             },
