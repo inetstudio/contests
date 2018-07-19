@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            {!! Form::products('products', $item->products)!!}
+            {!! Form::products('products', $item->products, compact('item')) !!}
 
             {!! Form::access('contests', $item) !!}
 
