@@ -212,7 +212,7 @@ class ContestsRepository implements ContestsRepositoryContract
             'custom_fields' => function ($query) {
                 $query->select(['customizable_id', 'customizable_type', 'key', 'value']);
             },
-            
+
             'meta' => function ($query) {
                 $query->select(['metable_id', 'metable_type', 'key', 'value']);
             },
