@@ -32,12 +32,10 @@ class ContestsService implements ContestsServiceContract
      */
     public function __construct()
     {
-        $this->services['fields'] = app()->make('InetStudio\CustomFields\Contracts\Services\Back\CustomFieldsServiceContract');
         $this->services['meta'] = app()->make('InetStudio\Meta\Contracts\Services\Back\MetaServiceContract');
         $this->services['images'] = app()->make('InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract');
         $this->services['files'] = app()->make('InetStudio\Uploads\Contracts\Services\Back\FilesServiceContract');
         $this->services['tags'] = app()->make('InetStudio\Tags\Contracts\Services\Back\TagsServiceContract');
-        $this->services['products'] = app()->make('InetStudio\Products\Contracts\Services\Back\ProductsServiceContract');
         $this->services['categories'] = app()->make('InetStudio\Categories\Contracts\Services\Back\CategoriesServiceContract');
         $this->services['access'] = app()->make('InetStudio\Access\Contracts\Services\Back\AccessServiceContract');
         $this->services['widgets'] = app()->make('InetStudio\Widgets\Contracts\Services\Back\WidgetsServiceContract');
@@ -90,11 +88,9 @@ class ContestsService implements ContestsServiceContract
         $this->services['files']->attachToObject($item, ['rules'], 'contests');
 
         $this->services['tags']->attachToObject($request, $item);
-        $this->services['products']->attachToObject($request, $item);
         $this->services['categories']->attachToObject($request, $item);
         $this->services['access']->attachToObject($request, $item);
         $this->services['widgets']->attachToObject($request, $item);
-        $this->services['fields']->attachToObject($request, $item);
 
         $item->searchable();
 

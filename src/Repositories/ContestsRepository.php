@@ -221,10 +221,6 @@ class ContestsRepository implements ContestsRepositoryContract
                 $query->select(['accessable_id', 'accessable_type', 'field', 'access']);
             },
 
-            'custom_fields' => function ($query) {
-                $query->select(['customizable_id', 'customizable_type', 'key', 'value']);
-            },
-
             'meta' => function ($query) {
                 $query->select(['metable_id', 'metable_type', 'key', 'value']);
             },
@@ -239,15 +235,6 @@ class ContestsRepository implements ContestsRepositoryContract
 
             'categories' => function ($query) {
                 $query->select(['id', 'parent_id', 'name', 'slug', 'title', 'description'])->whereNotNull('parent_id');
-            },
-
-            'products' => function ($query) {
-                $query->select(['id', 'title', 'brand'])
-                    ->with(['media' => function ($query) {
-                        $query->select(['id', 'model_id', 'model_type', 'collection_name', 'file_name', 'disk']);
-                    }, 'links' => function ($linksQuery) {
-                        $linksQuery->select(['id', 'product_id', 'link']);
-                    }]);
             },
 
             'counters' => function ($query) {
