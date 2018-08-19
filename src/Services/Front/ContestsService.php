@@ -40,104 +40,90 @@ class ContestsService implements ContestsServiceContract
      * Получаем объекты по id.
      *
      * @param $ids
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestsByIDs($ids, array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getContestsByIDs($ids, array $params = [])
     {
-        return $this->repository->getItemsByIDs($ids, $extColumns, $with, $returnBuilder);
+        return $this->repository->getItemsByIDs($ids, $params);
     }
 
     /**
      * Получаем объект по slug.
      *
      * @param string $slug
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestBySlug(string $slug, array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getContestBySlug(string $slug, array $params = [])
     {
-        return $this->repository->getItemBySlug($slug, $extColumns, $with, $returnBuilder);
+        return $this->repository->getItemBySlug($slug, $params);
     }
 
     /**
      * Получаем объекты по тегу.
      *
      * @param string $tagSlug
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestsByTag(string $tagSlug, array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getContestsByTag(string $tagSlug, array $params = [])
     {
-        return $this->repository->getItemsByTag($tagSlug, $extColumns, $with, $returnBuilder);
+        return $this->repository->getItemsByTag($tagSlug, $params);
     }
 
     /**
      * Получаем объекты по категории.
      *
      * @param string $categorySlug
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestsByCategory(string $categorySlug, array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getContestsByCategory(string $categorySlug, array $params = [])
     {
-        return $this->repository->getItemsByCategory($categorySlug, $extColumns, $with, $returnBuilder);
+        return $this->repository->getItemsByCategory($categorySlug, $params);
     }
 
     /**
      * Получаем объекты из категорий.
      *
      * @param $categories
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestsFromCategories($categories, array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getContestsFromCategories($categories, array $params = [])
     {
-        return $this->repository->getItemsFromCategories($categories, $extColumns, $with, $returnBuilder);
+        return $this->repository->getItemsFromCategories($categories, $params);
     }
 
     /**
      * Получаем сохраненные объекты пользователя.
      *
      * @param int $userID
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestsFavoritedByUser(int $userID, array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getContestsFavoritedByUser(int $userID, array $params = [])
     {
-        return $this->repository->getItemsFavoritedByUser($userID, $extColumns, $with, $returnBuilder);
+        return $this->repository->getItemsFavoritedByUser($userID, $params);
     }
 
     /**
      * Получаем все объекты.
      *
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getAllContests(array $extColumns = [], array $with = [], bool $returnBuilder = false)
+    public function getAllContests(array $params = [])
     {
-        return $this->repository->getAllItems($extColumns, $with, $returnBuilder);
+        return $this->repository->getAllItems($params);
     }
 
     /**
@@ -147,10 +133,16 @@ class ContestsService implements ContestsServiceContract
      */
     public function getFeedItems(): array
     {
-        $items = $this->repository->getAllItems(['title', 'description', 'content', 'publish_date'], ['categories'], true)
+        $items = $this->repository->getItemsQuery([
+                'columns' => ['title', 'description', 'content', 'publish_date'],
+                'relations' => ['categories'],
+                'order' => ['publish_date' => 'desc'],
+                'paging' => [
+                    'page' => 0,
+                    'limit' => 500,
+                ],
+            ])
             ->whereNotNull('publish_date')
-            ->orderBy('publish_date', 'desc')
-            ->limit(500)
             ->get();
 
         $resource = app()->make('InetStudio\Contests\Contracts\Transformers\Front\ContestsFeedItemsTransformerContract')
@@ -165,7 +157,7 @@ class ContestsService implements ContestsServiceContract
     }
 
     /**
-     * Получаем информацию по ингредиентам для карты сайта.
+     * Получаем информацию по конкурсам для карты сайта.
      *
      * @return array
      */

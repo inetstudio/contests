@@ -56,16 +56,16 @@ class ContestsService implements ContestsServiceContract
     }
 
     /**
-     * Возвращаем объекты по списку id.
+     * Получаем объекты по списку id.
      *
      * @param array|int $ids
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getContestsByIDs($ids, bool $returnBuilder = false)
+    public function getArticlesByIDs($ids, array $params = [])
     {
-        return $this->repository->getItemsByIDs($ids, [], [], $returnBuilder);
+        return $this->repository->getItemsByIDs($ids, $params);
     }
 
     /**
@@ -146,14 +146,16 @@ class ContestsService implements ContestsServiceContract
     }
 
     /**
-     * Возвращаем статистику битв по статусу.
+     * Возвращаем статистику конкурсов по статусу.
      *
      * @return mixed
      */
     public function getContestsStatisticByStatus()
     {
-        $contests = $this->repository->getAllItems([], ['status'], true)
-            ->select(['status_id', DB::raw('count(*) as total')])
+        $contests = $this->repository->getItemsQuery([
+                'columns' => ['status_id', DB::raw('count(*) as total')],
+                'relations' => ['status'],
+            ])
             ->groupBy('status_id')
             ->get();
 

@@ -2,24 +2,26 @@
 
 namespace InetStudio\Contests\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
+use InetStudio\AdminPanel\Repositories\BaseRepository;
 use InetStudio\Tags\Repositories\Traits\TagsRepositoryTrait;
 use InetStudio\Contests\Contracts\Models\ContestModelContract;
+use InetStudio\Favorites\Repositories\Traits\FavoritesRepositoryTrait;
 use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
 use InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract;
 
 /**
  * Class ContestsRepository.
  */
-class ContestsRepository implements ContestsRepositoryContract
+class ContestsRepository extends BaseRepository implements ContestsRepositoryContract
 {
     use TagsRepositoryTrait;
+    use FavoritesRepositoryTrait;
     use CategoriesRepositoryTrait;
 
     /**
-     * @var ContestModelContract
+     * @var string
      */
-    public $model;
+    protected $favoritesType = 'contest';
 
     /**
      * ContestsRepository constructor.
@@ -29,194 +31,9 @@ class ContestsRepository implements ContestsRepositoryContract
     public function __construct(ContestModelContract $model)
     {
         $this->model = $model;
-    }
 
-    /**
-     * Получаем модель репозитория.
-     *
-     * @return ContestModelContract
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * Возвращаем пустой объект по id.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function getEmptyObjectById(int $id)
-    {
-        return $this->model::select(['id'])->where('id', '=', $id)->first();
-    }
-
-    /**
-     * Возвращаем объект по id, либо создаем новый.
-     *
-     * @param int $id
-     *
-     * @return ContestModelContract
-     */
-    public function getItemByID(int $id): ContestModelContract
-    {
-        return $this->model::find($id) ?? new $this->model;
-    }
-
-    /**
-     * Возвращаем объекты по списку id.
-     *
-     * @param $ids
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
-     *
-     * @return mixed
-     */
-    public function getItemsByIDs($ids, array $extColumns = [], array $with = [], bool $returnBuilder = false)
-    {
-        $builder = $this->getItemsQuery($extColumns, $with)->whereIn('id', (array) $ids);
-
-        if ($returnBuilder) {
-            return $builder;
-        }
-
-        return $builder->get();
-    }
-
-    /**
-     * Сохраняем объект.
-     *
-     * @param array $data
-     * @param int $id
-     *
-     * @return ContestModelContract
-     */
-    public function save(array $data, int $id): ContestModelContract
-    {
-        $item = $this->getItemByID($id);
-        $item->fill($data);
-        $item->save();
-
-        return $item;
-    }
-
-    /**
-     * Удаляем объект.
-     *
-     * @param int $id
-     *
-     * @return bool
-     */
-    public function destroy($id): ?bool
-    {
-        return $this->getItemByID($id)->delete();
-    }
-
-    /**
-     * Ищем объекты.
-     *
-     * @param array $conditions
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
-     *
-     * @return mixed
-     */
-    public function searchItems(array $conditions, array $extColumns = [], array $with = [], bool $returnBuilder = false)
-    {
-        $builder = $this->getItemsQuery($extColumns, $with)->where($conditions);
-
-        if ($returnBuilder) {
-            return $builder;
-        }
-
-        return $builder->get();
-    }
-
-    /**
-     * Получаем все объекты.
-     *
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
-     *
-     * @return mixed
-     */
-    public function getAllItems(array $extColumns = [], array $with = [], bool $returnBuilder = false)
-    {
-        $builder = $this->getItemsQuery(array_merge($extColumns, ['created_at', 'updated_at']), $with);
-
-        if ($returnBuilder) {
-            return $builder;
-        }
-
-        return $builder->get();
-    }
-
-    /**
-     * Получаем объекты по slug.
-     *
-     * @param string $slug
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
-     *
-     * @return mixed
-     */
-    public function getItemBySlug(string $slug, array $extColumns = [], array $with = [], bool $returnBuilder = false)
-    {
-        $builder = $this->getItemsQuery($extColumns, $with)->whereSlug($slug);
-
-        if ($returnBuilder) {
-            return $builder;
-        }
-
-        $item = $builder->first();
-
-        return $item;
-    }
-
-    /**
-     * Получаем сохраненные объекты пользователя.
-     *
-     * @param int $userID
-     * @param array $extColumns
-     * @param array $with
-     * @param bool $returnBuilder
-     *
-     * @return mixed
-     */
-    public function getItemsFavoritedByUser(int $userID, array $extColumns = [], array $with = [], bool $returnBuilder = false)
-    {
-        $builder = $this->getItemsQuery(array_merge($extColumns, ['publish_date']), $with)
-            ->orderBy('publish_date', 'DESC')
-            ->whereFavoritedBy('contest', $userID);
-
-        if ($returnBuilder) {
-            return $builder;
-        }
-
-        $items = $builder->get();
-
-        return $items;
-    }
-
-    /**
-     * Возвращаем запрос на получение объектов.
-     *
-     * @param array $extColumns
-     * @param array $with
-     *
-     * @return Builder
-     */
-    protected function getItemsQuery($extColumns = [], $with = []): Builder
-    {
-        $defaultColumns = ['id', 'title', 'slug'];
-
-        $relations = [
+        $this->defaultColumns = ['id', 'title', 'slug'];
+        $this->relations = [
             'access' => function ($query) {
                 $query->select(['accessable_id', 'accessable_type', 'field', 'access']);
             },
@@ -242,11 +59,26 @@ class ContestsRepository implements ContestsRepositoryContract
             },
 
             'status' => function ($query) {
-                $query->select(['id', 'name', 'alias']);
+                $query->select(['id', 'name', 'alias', 'color_class']);
             },
         ];
+    }
 
-        return $this->model::select(array_merge($defaultColumns, $extColumns))
-            ->with(array_intersect_key($relations, array_flip($with)));
+    /**
+     * Получаем объекты по slug.
+     *
+     * @param string $slug
+     * @param array $params
+     *
+     * @return mixed
+     */
+    public function getItemBySlug(string $slug, array $params = [])
+    {
+        $builder = $this->getItemsQuery($params)
+            ->whereSlug($slug);
+
+        $item = $builder->first();
+
+        return $item;
     }
 }
