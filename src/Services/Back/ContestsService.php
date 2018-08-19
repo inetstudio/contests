@@ -63,7 +63,7 @@ class ContestsService implements ContestsServiceContract
      *
      * @return mixed
      */
-    public function getArticlesByIDs($ids, array $params = [])
+    public function getContestsByIDs($ids, array $params = [])
     {
         return $this->repository->getItemsByIDs($ids, $params);
     }
