@@ -9,8 +9,8 @@ return [
 
     'contests' => [
         'driver' => 'local',
-        'root' => storage_path('app/public/contests/'),
-        'url' => env('APP_URL').'/storage/contests/',
+        'root' => storage_path('app/public/contests'),
+        'url' => env('APP_URL').'/storage/contests',
         'visibility' => 'public',
     ],
 
