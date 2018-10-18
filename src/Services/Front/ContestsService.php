@@ -163,7 +163,10 @@ class ContestsService implements ContestsServiceContract
      */
     public function getSiteMapItems(): array
     {
-        $items = $this->repository->getAllItems();
+        $items = $this->repository->getAllItems([
+            'columns' => ['created_at', 'updated_at'],
+            'order' => ['created_at' => 'desc'],
+        ]);
 
         $resource = app()->make('InetStudio\Contests\Contracts\Transformers\Front\ContestsSiteMapTransformerContract')
             ->transformCollection($items);
