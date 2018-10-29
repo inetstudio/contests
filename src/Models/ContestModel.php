@@ -232,6 +232,7 @@ class ContestModel extends Model implements ContestModelContract, MetableContrac
             'slug' => [
                 'source' => 'title',
                 'unique' => true,
+                'includeTrashed' => true,
             ],
         ];
     }

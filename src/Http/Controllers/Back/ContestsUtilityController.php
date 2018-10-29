@@ -38,8 +38,10 @@ class ContestsUtilityController extends Controller implements ContestsUtilityCon
      */
     public function getSlug(Request $request): SlugResponseContract
     {
+        $id = (int) $request->get('id');
         $name = $request->get('name');
-        $model = app()->make('InetStudio\Contests\Contracts\Models\ContestModelContract');
+
+        $model = $this->services['contests']->getContestObject($id);
 
         $slug = ($name) ? SlugService::createSlug($model, 'slug', $name) : '';
 
