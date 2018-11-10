@@ -4,126 +4,27 @@ namespace InetStudio\Contests\Services\Front;
 
 use League\Fractal\Manager;
 use League\Fractal\Serializer\DataArraySerializer;
+use InetStudio\AdminPanel\Services\Front\BaseService;
+use InetStudio\Tags\Services\Front\Traits\TagsServiceTrait;
+use InetStudio\Favorites\Services\Front\Traits\FavoritesServiceTrait;
+use InetStudio\Categories\Services\Front\Traits\CategoriesServiceTrait;
 use InetStudio\Contests\Contracts\Services\Front\ContestsServiceContract;
 
 /**
  * Class ContestsService.
  */
-class ContestsService implements ContestsServiceContract
+class ContestsService extends BaseService implements ContestsServiceContract
 {
-    /**
-     * @var
-     */
-    public $repository;
+    use TagsServiceTrait;
+    use FavoritesServiceTrait;
+    use CategoriesServiceTrait;
 
     /**
      * ContestsService constructor.
      */
     public function __construct()
     {
-        $this->repository = app()->make('InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract');
-    }
-
-    /**
-     * Получаем объект по id.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function getContestById(int $id = 0)
-    {
-        return $this->repository->getItemByID($id);
-    }
-
-    /**
-     * Получаем объекты по id.
-     *
-     * @param $ids
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getContestsByIDs($ids, array $params = [])
-    {
-        return $this->repository->getItemsByIDs($ids, $params);
-    }
-
-    /**
-     * Получаем объект по slug.
-     *
-     * @param string $slug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getContestBySlug(string $slug, array $params = [])
-    {
-        return $this->repository->getItemBySlug($slug, $params);
-    }
-
-    /**
-     * Получаем объекты по тегу.
-     *
-     * @param string $tagSlug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getContestsByTag(string $tagSlug, array $params = [])
-    {
-        return $this->repository->getItemsByTag($tagSlug, $params);
-    }
-
-    /**
-     * Получаем объекты по категории.
-     *
-     * @param string $categorySlug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getContestsByCategory(string $categorySlug, array $params = [])
-    {
-        return $this->repository->getItemsByCategory($categorySlug, $params);
-    }
-
-    /**
-     * Получаем объекты из категорий.
-     *
-     * @param $categories
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getContestsFromCategories($categories, array $params = [])
-    {
-        return $this->repository->getItemsFromCategories($categories, $params);
-    }
-
-    /**
-     * Получаем сохраненные объекты пользователя.
-     *
-     * @param int $userID
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getContestsFavoritedByUser(int $userID, array $params = [])
-    {
-        return $this->repository->getItemsFavoritedByUser($userID, $params);
-    }
-
-    /**
-     * Получаем все объекты.
-     *
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getAllContests(array $params = [])
-    {
-        return $this->repository->getAllItems($params);
+        parent::__construct(app()->make('InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract'));
     }
 
     /**

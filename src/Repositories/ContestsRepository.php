@@ -5,6 +5,7 @@ namespace InetStudio\Contests\Repositories;
 use InetStudio\AdminPanel\Repositories\BaseRepository;
 use InetStudio\Tags\Repositories\Traits\TagsRepositoryTrait;
 use InetStudio\Contests\Contracts\Models\ContestModelContract;
+use InetStudio\AdminPanel\Repositories\Traits\SlugsRepositoryTrait;
 use InetStudio\Favorites\Repositories\Traits\FavoritesRepositoryTrait;
 use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
 use InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract;
@@ -15,6 +16,7 @@ use InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract;
 class ContestsRepository extends BaseRepository implements ContestsRepositoryContract
 {
     use TagsRepositoryTrait;
+    use SlugsRepositoryTrait;
     use FavoritesRepositoryTrait;
     use CategoriesRepositoryTrait;
 
@@ -62,23 +64,5 @@ class ContestsRepository extends BaseRepository implements ContestsRepositoryCon
                 $query->select(['id', 'name', 'alias', 'color_class']);
             },
         ];
-    }
-
-    /**
-     * Получаем объекты по slug.
-     *
-     * @param string $slug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getItemBySlug(string $slug, array $params = [])
-    {
-        $builder = $this->getItemsQuery($params)
-            ->whereSlug($slug);
-
-        $item = $builder->first();
-
-        return $item;
     }
 }
