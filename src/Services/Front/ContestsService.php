@@ -6,6 +6,7 @@ use League\Fractal\Manager;
 use League\Fractal\Serializer\DataArraySerializer;
 use InetStudio\AdminPanel\Services\Front\BaseService;
 use InetStudio\Tags\Services\Front\Traits\TagsServiceTrait;
+use InetStudio\AdminPanel\Services\Front\Traits\SlugsServiceTrait;
 use InetStudio\Favorites\Services\Front\Traits\FavoritesServiceTrait;
 use InetStudio\Categories\Services\Front\Traits\CategoriesServiceTrait;
 use InetStudio\Contests\Contracts\Services\Front\ContestsServiceContract;
@@ -16,6 +17,7 @@ use InetStudio\Contests\Contracts\Services\Front\ContestsServiceContract;
 class ContestsService extends BaseService implements ContestsServiceContract
 {
     use TagsServiceTrait;
+    use SlugsServiceTrait;
     use FavoritesServiceTrait;
     use CategoriesServiceTrait;
 
