@@ -45,7 +45,7 @@ class ContestsRepository extends BaseRepository implements ContestsRepositoryCon
             },
 
             'media' => function ($query) {
-                $query->select(['id', 'model_id', 'model_type', 'collection_name', 'file_name', 'disk', 'custom_properties']);
+                $query->select(['id', 'model_id', 'model_type', 'collection_name', 'file_name', 'disk', 'mime_type', 'custom_properties', 'responsive_images']);
             },
 
             'tags' => function ($query) {
