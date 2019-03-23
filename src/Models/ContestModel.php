@@ -3,8 +3,10 @@
 namespace InetStudio\Contests\Models;
 
 use Cocur\Slugify\Slugify;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use InetStudio\Statuses\Models\Traits\Status;
 use InetStudio\Meta\Contracts\Models\Traits\MetableContract;
@@ -15,7 +17,7 @@ use InetStudio\Favorites\Contracts\Models\Traits\FavoritableContract;
 /**
  * Class ContestModel.
  */
-class ContestModel extends Model implements ContestModelContract, MetableContract, HasMedia, FavoritableContract, RateableContract
+class ContestModel extends Model implements ContestModelContract, MetableContract, HasMedia, FavoritableContract, RateableContract, Auditable
 {
     use \Laravel\Scout\Searchable;
     use \Cviebrock\EloquentSluggable\Sluggable;
@@ -26,7 +28,7 @@ class ContestModel extends Model implements ContestModelContract, MetableContrac
     use \InetStudio\Access\Models\Traits\Accessable;
     use \InetStudio\Uploads\Models\Traits\HasImages;
     use \InetStudio\Widgets\Models\Traits\HasWidgets;
-    use \Venturecraft\Revisionable\RevisionableTrait;
+    use \OwenIt\Auditing\Auditable;
     use \InetStudio\Comments\Models\Traits\HasComments;
     use \InetStudio\Favorites\Models\Traits\Favoritable;
     use \Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -76,7 +78,12 @@ class ContestModel extends Model implements ContestModelContract, MetableContrac
         'publish_date',
     ];
 
-    protected $revisionCreationsEnabled = true;
+    /**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
 
     /**
      * Сеттер атрибута title.
@@ -208,14 +215,14 @@ class ContestModel extends Model implements ContestModelContract, MetableContrac
      */
     public function toSearchableArray()
     {
-        $arr = array_only($this->toArray(), ['id', 'title', 'description', 'content']);
+        $arr = Arr::only($this->toArray(), ['id', 'title', 'description', 'content']);
 
         $arr['categories'] = $this->categories->map(function ($item) {
-            return array_only($item->toSearchableArray(), ['id', 'title']);
+            return Arr::only($item->toSearchableArray(), ['id', 'title']);
         })->toArray();
 
         $arr['tags'] = $this->tags->map(function ($item) {
-            return array_only($item->toSearchableArray(), ['id', 'name']);
+            return Arr::only($item->toSearchableArray(), ['id', 'name']);
         })->toArray();
 
         return $arr;
