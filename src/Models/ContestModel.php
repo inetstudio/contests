@@ -20,15 +20,15 @@ use InetStudio\Favorites\Contracts\Models\Traits\FavoritableContract;
 class ContestModel extends Model implements ContestModelContract, MetableContract, HasMedia, FavoritableContract, RateableContract, Auditable
 {
     use \Laravel\Scout\Searchable;
+    use \OwenIt\Auditing\Auditable;
     use \Cviebrock\EloquentSluggable\Sluggable;
     use \InetStudio\Meta\Models\Traits\Metable;
-    use \InetStudio\Tags\Models\Traits\HasTags;
+    use \InetStudio\TagsPackage\Tags\Models\Traits\HasTags;
     use \Illuminate\Database\Eloquent\SoftDeletes;
     use \InetStudio\Rating\Models\Traits\Rateable;
     use \InetStudio\Access\Models\Traits\Accessable;
     use \InetStudio\Uploads\Models\Traits\HasImages;
     use \InetStudio\Widgets\Models\Traits\HasWidgets;
-    use \OwenIt\Auditing\Auditable;
     use \InetStudio\Comments\Models\Traits\HasComments;
     use \InetStudio\Favorites\Models\Traits\Favoritable;
     use \Cviebrock\EloquentSluggable\SluggableScopeHelpers;
