@@ -21,12 +21,15 @@ class ContestsService extends BaseService implements ContestsServiceContract
     use FavoritesServiceTrait;
     use CategoriesServiceTrait;
 
+    public $model;
+
     /**
      * ContestsService constructor.
      */
     public function __construct()
     {
         parent::__construct(app()->make('InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract'));
+        $this->model = app()->make('InetStudio\Contests\Contracts\Models\ContestModelContract');
     }
 
     /**
