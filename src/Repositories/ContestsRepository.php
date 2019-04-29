@@ -6,7 +6,6 @@ use InetStudio\AdminPanel\Repositories\BaseRepository;
 use InetStudio\Contests\Contracts\Models\ContestModelContract;
 use InetStudio\AdminPanel\Repositories\Traits\SlugsRepositoryTrait;
 use InetStudio\Favorites\Repositories\Traits\FavoritesRepositoryTrait;
-use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
 use InetStudio\Contests\Contracts\Repositories\ContestsRepositoryContract;
 
 /**
@@ -16,7 +15,6 @@ class ContestsRepository extends BaseRepository implements ContestsRepositoryCon
 {
     use SlugsRepositoryTrait;
     use FavoritesRepositoryTrait;
-    use CategoriesRepositoryTrait;
 
     /**
      * @var string
