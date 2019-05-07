@@ -32,7 +32,7 @@ class ContestsService implements ContestsServiceContract
      */
     public function __construct()
     {
-        $this->services['meta'] = app()->make('InetStudio\Meta\Contracts\Services\Back\MetaServiceContract');
+        $this->services['meta'] = app()->make('InetStudio\MetaPackage\Meta\Contracts\Services\Back\ItemsServiceContract');
         $this->services['images'] = app()->make('InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract');
         $this->services['files'] = app()->make('InetStudio\Uploads\Contracts\Services\Back\FilesServiceContract');
         $this->services['tags'] = app()->make('InetStudio\TagsPackage\Tags\Contracts\Services\Back\ItemsServiceContract');
