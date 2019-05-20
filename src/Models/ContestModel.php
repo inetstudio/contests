@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-use InetStudio\Statuses\Models\Traits\Status;
+use InetStudio\StatusesPackage\Statuses\Models\Traits\Status;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use InetStudio\Contests\Contracts\Models\ContestModelContract;
 use InetStudio\Rating\Contracts\Models\Traits\RateableContract;
