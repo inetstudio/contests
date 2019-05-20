@@ -24,6 +24,11 @@ class ContestsService extends BaseService implements ContestsServiceContract
     public $model;
 
     /**
+     * @var string
+     */
+    protected $favoritesType = 'contest';
+
+    /**
      * ContestsService constructor.
      */
     public function __construct()
