@@ -1,37 +1,40 @@
 {
-    "name": "inetstudio/contests",
-    "description": "Package for contests",
-    "homepage": "https://github.com/inetstudio/contests",
-    "license": "MIT",
-    "authors": [
-      {
-        "name": "Konstantin Bukin",
-        "email": "bukin@inetstudio.ru"
-      }
-    ],
-    "require": {
-      "inetstudio/access": "1.8.*",
-      "inetstudio/categories": "1.8.*",
-      "inetstudio/comments": "1.8.*",
-      "inetstudio/favorites": "1.8.*",
-      "inetstudio/meta": "1.8.*",
-      "inetstudio/tags": "1.8.*",
-      "inetstudio/rating": "1.8.*",
-      "inetstudio/simple-counters": "1.8.*",
-      "inetstudio/statuses": "1.8.*",
-      "inetstudio/widgets": "1.8.*"
-    },
-    "autoload": {
-      "psr-4": {
-        "InetStudio\\Contests\\": "src/"
-      }
-    },
-    "extra": {
-      "laravel": {
-        "providers": [
-          "InetStudio\\Contests\\Providers\\ContestsBindingsServiceProvider",
-          "InetStudio\\Contests\\Providers\\ContestsServiceProvider"
-        ]
-      }
+  "name": "inetstudio/contests",
+  "description": "Package for contests",
+  "homepage": "https://github.com/inetstudio/contests",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Konstantin Bukin",
+      "email": "bukin@inetstudio.ru"
     }
+  ],
+  "require": {
+    "inetstudio/access": "1.8.*",
+    "inetstudio/admin-panel": "1.8.*",
+    "inetstudio/categories": "1.8.*",
+    "inetstudio/comments": "1.8.*",
+    "inetstudio/favorites": "1.8.*",
+    "inetstudio/meta": "1.8.*",
+    "inetstudio/tags": "1.8.*",
+    "inetstudio/rating": "1.8.*",
+    "inetstudio/simple-counters": "1.8.*",
+    "inetstudio/statuses": "1.8.*",
+    "inetstudio/widgets": "1.8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "InetStudio\\ContestsPackage\\": "package/src",
+      "InetStudio\\ContestsPackage\\Contests\\": "entities/contests/src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "InetStudio\\ContestsPackage\\Providers\\ServiceProvider",
+        "InetStudio\\ContestsPackage\\Contests\\Providers\\BindingsServiceProvider",
+        "InetStudio\\ContestsPackage\\Contests\\Providers\\ServiceProvider"
+      ]
+    }
+  }
 }
