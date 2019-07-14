@@ -127,6 +127,16 @@ class ContestModel extends Model implements ContestModelContract
     }
 
     /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableIndex()
+    {
+        return trim(config('scout.elasticsearch.index', '').'_contests', '_');
+    }
+
+    /**
      * Get the _type name for the model.
      *
      * @return string
