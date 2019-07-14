@@ -127,6 +127,16 @@ class ContestModel extends Model implements ContestModelContract
     }
 
     /**
+     * Get the _type name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return '_doc';
+    }
+
+    /**
      * Возвращаем конфиг для генерации slug модели.
      *
      * @return array
