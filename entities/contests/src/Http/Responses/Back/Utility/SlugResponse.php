@@ -30,9 +30,9 @@ class SlugResponse implements SlugResponseContract
      *
      * @param  Request  $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function toResponse($request): JsonResponse
+    public function toResponse($request)
     {
         return response()->json($this->slug);
     }
