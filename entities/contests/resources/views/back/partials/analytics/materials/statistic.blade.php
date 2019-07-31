@@ -1,7 +1,7 @@
-@inject('contestsService', 'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\ContestsServiceContract')
+@inject('contestsService', 'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\ItemsServiceContract')
 
 @php
-    $contests = $contestsService->getContestsStatisticByStatus();
+    $contests = $contestsService->getItemsStatisticByStatus();
 @endphp
 
 <li>
