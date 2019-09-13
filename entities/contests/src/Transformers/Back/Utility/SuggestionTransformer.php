@@ -2,15 +2,14 @@
 
 namespace InetStudio\ContestsPackage\Contests\Transformers\Back\Utility;
 
-use League\Fractal\TransformerAbstract;
-use League\Fractal\Resource\Collection as FractalCollection;
+use InetStudio\AdminPanel\Base\Transformers\BaseTransformer;
 use InetStudio\ContestsPackage\Contests\Contracts\Models\ContestModelContract;
 use InetStudio\ContestsPackage\Contests\Contracts\Transformers\Back\Utility\SuggestionTransformerContract;
 
 /**
  * Class SuggestionTransformer.
  */
-class SuggestionTransformer extends TransformerAbstract implements SuggestionTransformerContract
+class SuggestionTransformer extends BaseTransformer implements SuggestionTransformerContract
 {
     /**
      * @var string
@@ -51,17 +50,5 @@ class SuggestionTransformer extends TransformerAbstract implements SuggestionTra
                 'id' => $item['id'],
                 'name' => $item['title'],
             ];
-    }
-
-    /**
-     * Обработка коллекции объектов.
-     *
-     * @param $items
-     *
-     * @return FractalCollection
-     */
-    public function transformCollection($items): FractalCollection
-    {
-        return new FractalCollection($items, $this);
     }
 }
