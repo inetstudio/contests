@@ -35,6 +35,7 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\DataTableServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Back\DataTableService',
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\ItemsServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Back\ItemsService',
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\UtilityServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Back\UtilityService',
+        'InetStudio\ContestsPackage\Contests\Contracts\Services\Front\FeedsServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Front\FeedsService',
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Front\ItemsServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Front\ItemsService',
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Front\SitemapServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Front\SitemapService',
         'InetStudio\ContestsPackage\Contests\Contracts\Transformers\Back\Resource\IndexTransformerContract' => 'InetStudio\ContestsPackage\Contests\Transformers\Back\Resource\IndexTransformer',
