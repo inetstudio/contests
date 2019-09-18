@@ -15,9 +15,12 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
      */
     public $bindings = [
         'InetStudio\ContestsPackage\Contests\Contracts\Events\Back\ModifyItemEventContract' => 'InetStudio\ContestsPackage\Contests\Events\Back\ModifyItemEvent',
+        'InetStudio\ContestsPackage\Contests\Contracts\Exports\CommentsExportContract' => 'InetStudio\ContestsPackage\Contests\Exports\CommentsExport',
+        'InetStudio\ContestsPackage\Contests\Contracts\Exports\ImagesExportContract' => 'InetStudio\ContestsPackage\Contests\Exports\ImagesExport',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Controllers\Back\ResourceControllerContract' => 'InetStudio\ContestsPackage\Contests\Http\Controllers\Back\ResourceController',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Controllers\Back\DataControllerContract' => 'InetStudio\ContestsPackage\Contests\Http\Controllers\Back\DataController',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Controllers\Back\UtilityControllerContract' => 'InetStudio\ContestsPackage\Contests\Http\Controllers\Back\UtilityController',
+        'InetStudio\ContestsPackage\Contests\Contracts\Http\Controllers\Front\ExportControllerContract' => 'InetStudio\ContestsPackage\Contests\Http\Controllers\Front\ExportController',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Requests\Back\SaveItemRequestContract' => 'InetStudio\ContestsPackage\Contests\Http\Requests\Back\SaveItemRequest',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Back\Resource\DestroyResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Back\Resource\DestroyResponse',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Back\Resource\FormResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Back\Resource\FormResponse',
@@ -26,6 +29,8 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Back\Resource\ShowResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Back\Resource\ShowResponse',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Back\Utility\SlugResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Back\Utility\SlugResponse',
         'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Back\Utility\SuggestionsResponse',
+        'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Front\Export\CommentsExportResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Front\Export\CommentsExportResponse',
+        'InetStudio\ContestsPackage\Contests\Contracts\Http\Responses\Front\Export\ImagesExportResponseContract' => 'InetStudio\ContestsPackage\Contests\Http\Responses\Front\Export\ImagesExportResponse',
         'InetStudio\ContestsPackage\Contests\Contracts\Models\ContestModelContract' => 'InetStudio\ContestsPackage\Contests\Models\ContestModel',
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\DataTableServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Back\DataTableService',
         'InetStudio\ContestsPackage\Contests\Contracts\Services\Back\ItemsServiceContract' => 'InetStudio\ContestsPackage\Contests\Services\Back\ItemsService',

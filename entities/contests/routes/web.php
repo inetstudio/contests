@@ -21,3 +21,14 @@ Route::group(
         Route::resource('contests', 'ResourceControllerContract', ['as' => 'back']);
     }
 );
+
+Route::group(
+    [
+        'namespace' => 'InetStudio\ContestsPackage\Contests\Contracts\Http\Controllers\Front',
+        'middleware' => ['web'],
+    ],
+    function () {
+        Route::get('/contest/{slug}/export/comments', 'ExportControllerContract@exportComments')->name('front.contests.export.comments');
+        Route::get('/contest/{slug}/export/images', 'ExportControllerContract@exportImages')->name('front.contests.export.images');
+    }
+);
