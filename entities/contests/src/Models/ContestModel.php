@@ -194,7 +194,7 @@ class ContestModel extends Model implements ContestModelContract
                     'disk',
                     'mime_type',
                     'custom_properties',
-                    'responsive_images'
+                    'responsive_images',
                 ]);
             },
 
