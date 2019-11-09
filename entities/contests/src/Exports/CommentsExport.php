@@ -47,7 +47,7 @@ class CommentsExport implements CommentsExportContract, FromCollection, WithMapp
         $contestsService = app()->make('InetStudio\ContestsPackage\Contests\Contracts\Services\Front\ItemsServiceContract');
 
         $params = [
-            'relations' => ['comments']
+            'relations' => ['comments'],
         ];
 
         return $contestsService->getItemBySlug($this->data['route']['slug'], $params)->first()->comments;
