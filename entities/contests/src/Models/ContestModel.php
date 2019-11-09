@@ -157,7 +157,6 @@ class ContestModel extends Model implements ContestModelContract
             'slug' => [
                 'source' => 'title',
                 'unique' => true,
-                'includeTrashed' => true,
             ],
         ];
     }
