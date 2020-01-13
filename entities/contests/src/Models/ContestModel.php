@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Rating\Models\Traits\Rateable;
-use InetStudio\Access\Models\Traits\Accessable;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use InetStudio\Widgets\Models\Traits\HasWidgets;
 use InetStudio\Favorites\Models\Traits\Favoritable;
@@ -19,6 +18,7 @@ use InetStudio\TagsPackage\Tags\Models\Traits\HasTags;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\AdminPanel\Base\Models\Traits\SluggableTrait;
 use InetStudio\StatusesPackage\Statuses\Models\Traits\Status;
+use InetStudio\AccessPackage\Fields\Models\Traits\HasFieldsAccess;
 use InetStudio\CommentsPackage\Comments\Models\Traits\HasComments;
 use InetStudio\CategoriesPackage\Categories\Models\Traits\HasCategories;
 use InetStudio\AdminPanel\Base\Models\Traits\Scopes\BuildQueryScopeTrait;
@@ -36,7 +36,6 @@ class ContestModel extends Model implements ContestModelContract
     use Auditable;
     use Sluggable;
     use HasImages;
-    use Accessable;
     use HasWidgets;
     use Searchable;
     use Favoritable;
@@ -45,6 +44,7 @@ class ContestModel extends Model implements ContestModelContract
     use HasCategories;
     use HasClassifiers;
     use SluggableTrait;
+    use HasFieldsAccess;
     use BuildQueryScopeTrait;
     use HasSimpleCountersTrait;
 
@@ -175,8 +175,8 @@ class ContestModel extends Model implements ContestModelContract
         ];
 
         self::$buildQueryScopeDefaults['relations'] = [
-            'access' => function ($query) {
-                $query->select(['accessable_id', 'accessable_type', 'field', 'access']);
+            'fields_access' => function ($query) {
+                $query->select(['model_id', 'model_type', 'field', 'access']);
             },
 
             'meta' => function ($query) {
