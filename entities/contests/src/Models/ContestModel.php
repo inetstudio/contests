@@ -9,7 +9,6 @@ use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use InetStudio\Rating\Models\Traits\Rateable;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use InetStudio\Widgets\Models\Traits\HasWidgets;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
@@ -32,7 +31,6 @@ class ContestModel extends Model implements ContestModelContract
 {
     use HasTags;
     use HasMeta;
-    use Rateable;
     use Auditable;
     use Sluggable;
     use HasImages;
