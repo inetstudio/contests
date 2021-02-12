@@ -2,6 +2,7 @@
 
 namespace InetStudio\ContestsPackage\Contests\Models;
 
+use Cocur\Slugify\Slugify;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 use Illuminate\Support\Carbon;
@@ -10,11 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Uploads\Models\Traits\HasImages;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use InetStudio\WidgetsPackage\Widgets\Models\Traits\HasWidgets;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use InetStudio\TagsPackage\Tags\Models\Traits\HasTags;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
-use InetStudio\AdminPanel\Base\Models\Traits\SluggableTrait;
 use InetStudio\StatusesPackage\Statuses\Models\Traits\Status;
 use InetStudio\AdminPanel\Base\Models\Traits\HasDynamicRelations;
 use InetStudio\AccessPackage\Fields\Models\Traits\HasFieldsAccess;
@@ -40,10 +41,10 @@ class ContestModel extends Model implements ContestModelContract
     use SoftDeletes;
     use HasCategories;
     use HasClassifiers;
-    use SluggableTrait;
     use HasFieldsAccess;
     use HasDynamicRelations;
     use BuildQueryScopeTrait;
+    use SluggableScopeHelpers;
     use HasSimpleCountersTrait;
 
     /**
@@ -341,6 +342,49 @@ class ContestModel extends Model implements ContestModelContract
     public function getMaterialTypeAttribute()
     {
         return self::BASE_MATERIAL_TYPE;
+    }
+
+    public function customizeSlugEngine(Slugify $engine)
+    {
+        $rules = [
+            'а' => 'a',
+            'б' => 'b',
+            'в' => 'v',
+            'г' => 'g',
+            'д' => 'd',
+            'е' => 'e',
+            'ё' => 'jo',
+            'ж' => 'zh',
+            'з' => 'z',
+            'и' => 'i',
+            'й' => 'j',
+            'к' => 'k',
+            'л' => 'l',
+            'м' => 'm',
+            'н' => 'n',
+            'о' => 'o',
+            'п' => 'p',
+            'р' => 'r',
+            'с' => 's',
+            'т' => 't',
+            'у' => 'u',
+            'ф' => 'f',
+            'х' => 'h',
+            'ц' => 'c',
+            'ч' => 'ch',
+            'ш' => 'sh',
+            'щ' => 'shh',
+            'ъ' => '',
+            'ы' => 'y',
+            'ь' => '',
+            'э' => 'je',
+            'ю' => 'ju',
+            'я' => 'ja',
+        ];
+
+        $engine->addRules($rules);
+
+        return $engine;
     }
 
     use Status;
