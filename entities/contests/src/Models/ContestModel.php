@@ -150,7 +150,7 @@ class ContestModel extends Model implements ContestModelContract
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
