@@ -1,7 +1,5 @@
-let contests = {};
+export let contests = {
+  init: function () {
 
-contests.init = function() {
-
+  }
 };
-
-module.exports = contests;

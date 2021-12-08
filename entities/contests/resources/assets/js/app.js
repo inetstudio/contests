@@ -1,2 +1,3 @@
-let contests = require('./package/contests');
+import {contests} from './package/contests';
+
 contests.init();
