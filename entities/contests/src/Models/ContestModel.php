@@ -10,7 +10,7 @@ use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use InetStudio\Uploads\Models\Traits\HasImages;
+use InetStudio\UploadsPackage\Uploads\Models\Traits\HasMedia;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use InetStudio\WidgetsPackage\Widgets\Models\Traits\HasWidgets;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
@@ -34,7 +34,7 @@ class ContestModel extends Model implements ContestModelContract
     use HasMeta;
     use Auditable;
     use Sluggable;
-    use HasImages;
+    use HasMedia;
     use HasWidgets;
     use Searchable;
     use HasComments;
@@ -63,16 +63,6 @@ class ContestModel extends Model implements ContestModelContract
      * @var bool
      */
     protected $auditTimestamps = true;
-
-    /**
-     * Настройки для генерации изображений.
-     *
-     * @var array
-     */
-    private $images = [
-        'config' => 'contests',
-        'model' => '',
-    ];
 
     /**
      * Связанная с моделью таблица.
@@ -385,6 +375,11 @@ class ContestModel extends Model implements ContestModelContract
         $engine->addRules($rules);
 
         return $engine;
+    }
+
+    public function getMediaConfig(): array
+    {
+        return config('contests.media', []);
     }
 
     use Status;
