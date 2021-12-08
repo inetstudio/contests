@@ -49,7 +49,6 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $images = (config('contests.images.conversions.'.$item->material_type)) ? array_keys(config('contests.images.conversions.'.$item->material_type)) : [];
         app()->make('InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract')
             ->attachToObject(request(), $item, $images, 'contests', $item->material_type);
-
         app()->make('InetStudio\Uploads\Contracts\Services\Back\FilesServiceContract')
             ->attachToObject($item, ['rules'], 'contests');
 
@@ -65,8 +64,18 @@ class ItemsService extends BaseService implements ItemsServiceContract
         app()->make('InetStudio\AccessPackage\Fields\Contracts\Services\Back\ItemsServiceContract')
             ->attachToObject($fieldsAccessData, $item);
 
-        app()->make('InetStudio\WidgetsPackage\Widgets\Contracts\Services\Back\ItemsServiceContract')
-            ->attachToObject(request(), $item);
+        resolve('InetStudio\WidgetsPackage\Widgets\Contracts\Actions\Back\AttachWidgetsToObjectActionContract')
+            ->execute(
+                resolve(
+                    'InetStudio\WidgetsPackage\Widgets\Contracts\DTO\Actions\Back\AttachWidgetsToObjectDataContract',
+                    [
+                        'args' => [
+                            'item' => $item,
+                            'widgets' => explode(',', request()->get('widgets'))
+                        ],
+                    ]
+                )
+            );
 
         $item->searchable();
 
